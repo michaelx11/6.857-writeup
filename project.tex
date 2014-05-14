@@ -161,6 +161,25 @@ deterministic way from hardcoded inputs, and so will always be the same.
 
 \subsection{Continued Investigation}
 
+\subsubsection{Advanced Static Analysis}
+  Many of the vulnerabilities discussed in Cryptolint are highly interesting. While the paper describes their methods at a high level, they did not
+release any source. Therefore, we plan to extend our analyzer to search for hard-coded or static initialization vectors and seeds. An initialization vector
+is the first block passed into a block cipher, it effectively adds a block's worth of random bits to the cipher. A non-random initialization vector
+does not provide the security normally guaranteed by a block cipher with a random initialization vector. On a related note, hard-coded seeds,
+the input to a pseudo-random number generator, result in deterministic, insecure randomness. Any hard-coded seed used for secure randomness
+is a red flag.
+  To tackle this slighly deeper analysis, we hope to make use of the same tool the authors of Cryptolint leveraged, Androguard. If Androguard works
+as advertised, we should be able to determine when and where a certain variable's value can be manipulated. If there are no opportunities for dynamic modifications
+to a variable, we would judge it to be static or hard-coded.
+
+\subsubsection{Dynamic Analysis}
+
+  Another avenue of attack would be to analyze the application during execution. Existing software allows us to intercept the packets sent
+and received by the application. This could give us insight into the protocol and allow us to draw more conclusions about the results
+obtained by static analysis. Going even further, we could possibly leverage an Android Binary Instrumentation tool, such as \textbf{adbi}. If an
+instrumentation tool is effective, it would allow us to inspect variables or data throughout the execution of an application, making it easy
+to find deterministic pseudorandomness.
+
 \subsection{Potential Applications}
 
 We think there are a lot of potential future applications to the idea of making users aware of the security (or lack thereof) of apps they use.  We
