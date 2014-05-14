@@ -62,9 +62,8 @@ such as images, sound or fonts.
   Our next step was to scan the directory and filter the source for relevant strings. We used the \textit{egrep} to search
 each directory for lines in Smali files containing ``const-string''. We fed these lines into a Python script
 which checked validity based on Shannon entropy, length, and composition (letters and numbers). Before filtering a
-decompiled application averaged $200,000$ lines of Smali code. After filtering, we obtained at most a few hundred lines
-of possible hits.  (The exact code used is avaiable in an appendix to this document.\#TODO)
-
+decompiled application averaged $200,000$ lines of Smali code. After filtering, we obtained on average only a few dozen
+possible hits.
 \subsection{Initial Results}
 
   We focused on searching for \textit{const-string} objects, or hardcoded strings, in the decompiled Smali.
