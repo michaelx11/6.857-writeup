@@ -61,14 +61,14 @@ the open-source program APKTool \cite{APKTool} to decompile these APKs.  APKTool
 is the language used by the Android system.
 We decompiled all $917$ on a single quad-core machine. In addition to the Smali code, this process generated extraneous files
 such as images, sound or fonts. 
-  Our next step was to scan the directory and filter the source for relevant strings. We used the \textit{egrep} to search
+  Our next step was to scan the directory and filter the source for relevant strings. We used the \texttt{egrep} to search
 each directory for lines in Smali files containing ``const-string''. We fed these lines into a Python script
 which checked validity based on Shannon entropy, length, and composition (letters and numbers). Before filtering a
 decompiled application averaged $200,000$ lines of Smali code. After filtering, we obtained on average only a few dozen
 possible hits for each app.
 \subsection{Initial Results}
 
-  We focused on searching for \textit{const-string} objects, or hardcoded strings, in the decompiled Smali.
+  We focused on searching for \texttt{const-string} objects, or hardcoded strings, in the decompiled Smali.
 At first, we focused on searching for purely high-entropy constant strings of significant length. 
 After examining the initial analysis data, we noticed that a large number of cryptographic terms other than keys were being
 listed. For example, ``SHA1withRSA'' was a common term that qualified as ``high-entropy''. In light of this discovery,
@@ -77,20 +77,32 @@ does not uncover any actual security flaws, it does tell you something about wha
 
 \subsection{Aggregate Information}
 
-  Investigating the frequency of cryptographic algorithms yielded some interesting results. We can use
+  Investigating the frequency of cryptographic algorithms yielded some interesting information. We can use
 files with a high number of references to pinpoint security hotspots in an application. Additionally, 
 cryptographic libraries leave an easily recognizable pattern of crypto references. A quick scan
 of our analyzed data reveals that $16$ or $17$ applications make us of the BouncyCastle/SpongyCastle crypto
 libraries. The insight here is that we can easily identify which files contains crypto code and check
 for hardcoded keys and other vulnerabilities in close proximity.
 
-  Later, we shifted to searching for specific calls to symmetric block cipher methods. We 
-  
-\subsection{Uncovering Vulnerabilities from Aggregate Information?}
+  Later, we shifted to searching for specific calls to symmetric block cipher methods. We looked for both
+block cipher standards and modes such as \textbf{AES}, \textbf{DES}, \textbf{CFB} and \textbf{CBC}. Regex expressions were used to filter
+for spurious hits; a string that simply contained \textbf{AES} would not be included. We verified this manually by printing out discovered
+references. All the references we inspected were of the format \texttt{AES/CBC/NoPadding} or something similar, which represents
+a call to a function from Java's \texttt{Cipher} class in the \texttt{Javax/Crypto} package. Developers who did not use this library for
+ciphers may not have been listed, but again our goal was broad trends over a large number of apps. By doing this analysis, we were effectively
+examining how a significant proportion of application developers were using block ciphers, and if they were using them correctly.
 
-We can also use this aggregate information to uncover some potential security flaws.  For example, a fairly large number
-of apps used ECB mode block encryption, a method of encryption vulnerable to several known attacks.  Our analysis could
-therefore suggest what apps would be susceptible to such attacks.
+The results we obtained, summarized in Figure 2., are somewhat shocking. We recorded $132$ individual applications which used
+\textbf{DES} for their encryption. \textbf{DES} is an antiquated symmetric block cipher standard which relies on $56$ bit keys,
+easily brute forceable with modern hardware. While developers may have reasons for using \textbf{DES}, we want to encourage
+the community to switch to \textbf{AES} for all symmetric block cipher applications. The benefits of secure cryptography far
+outweight convenience or other justifications. We also draw attention to the number of applications that utilize ciphers in
+\textbf{ECB} mode. For anything more than a single block, \textbf{ECB} mode is insecure, since each block will always decrypt
+in the same way. This essentially leaves the pattern of the plaintext intact, leaking significant information. The canonical
+example of this is \textbf{ECB} mode encryption applied to an image of Tux, the Linux penguin. The encrypted data
+clearly reveals the outline of Tux. Any area of uniform color is immediately obvious after \textbf{ECB} encryption.
+While not entirely comprehensive, our data shows a striking number of applications that use block ciphers in vulnerable
+configurations.
 
 \subsection{Back to Snapchat?}
 
