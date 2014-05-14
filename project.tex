@@ -50,20 +50,22 @@ It checks for six specific types of vulnerabilities:
 Unfortunately, we could not locate any source for Cryptolint. Cryptolint's site allows for submission of
 applications to be analyzed, but the analyzer did not return any results for us.  The source code of their
 system is not available, so we cannot use it for ourselves.   Moreover, the site only supplies $5$ analyzed apps, 
-none of them very prominent or popular. Therefore, we feel justified in designing and coding our own analyzer.
+none of them very prominent or popular. 
+
+Given these issues, and given our inability to find any other analysis of such apps, we feel justified in designing 
+and coding our own analyzer.
 
 \subsection{Implementation}
-
-  Decompiling the Android applications was done with the open source tool: apktool. This program takes
-an apk as input and unpacks the application in a directory, including source in Smali, 
-a language used by Android's Dalvik virtual machine.
+We downloaded Android APKs from various locations across the Internet, most notably (#TODO). Once downloaded, we used
+the open-source program APKTool \cite{APKTool} to decompile these APKs.  APKTool decompiles the app into Smali code; this
+is the language used by the Android system.
 We decompiled all $917$ on a single quad-core machine. In addition to the Smali code, this process generated extraneous files
 such as images, sound or fonts. 
   Our next step was to scan the directory and filter the source for relevant strings. We used the \textit{egrep} to search
 each directory for lines in Smali files containing ``const-string''. We fed these lines into a Python script
 which checked validity based on Shannon entropy, length, and composition (letters and numbers). Before filtering a
 decompiled application averaged $200,000$ lines of Smali code. After filtering, we obtained on average only a few dozen
-possible hits.
+possible hits for each app.
 \subsection{Initial Results}
 
   We focused on searching for \textit{const-string} objects, or hardcoded strings, in the decompiled Smali.
@@ -143,6 +145,8 @@ rather badly misled by Snapchat's claims of 'security'.
         http://security.stackexchange.com/questions/52584/why-can-we-still-crack-snapchat-photos-in-12-lines-of-ruby
         \bibitem{2}
         http://gibsonsec.org/snapchat/snapchat_gibsonsec.txt
+        \bibitem{APKTool}
+        https://code.google.com/p/android-apktool/
 
 \end{thebibliography}
 \end{document}
