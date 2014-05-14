@@ -83,6 +83,12 @@ libraries. The insight here is that we can easily identify which files contains 
 for hardcoded keys and other vulnerabilities in close proximity.
 
   Later, we shifted to searching for specific calls to symmetric block cipher methods. We 
+  
+\subsection{Uncovering Vulnerabilities from Aggregate Information?}
+
+We can also use this aggregate information to uncover some potential security flaws.  For example, a fairly large number
+of apps used ECB mode block encryption, a method of encryption vulnerable to several known attacks.  Our analysis could
+therefore suggest what apps would be susceptible to such attacks.
 
 \subsection{Back to Snapchat?}
 
