@@ -19,7 +19,7 @@
 
 \section{Snapchat Flaws}
 
-The inspiration for this project was a description of a security flaw in Snapchat, published on the internet.\cite{1} (\#TODO)
+The inspiration for this project was a description of a security flaw in Snapchat, published on the internet.\cite{1}
 
 Snapchat encrypts images that the owner of the device it's running on is not supposed to be able to access.  Unfortunately,
 it encrypts them using the hard-coded encryption key ``M02cnQ51Ji97vwT4''.  Once this key is found and known, you can use it
@@ -109,7 +109,7 @@ There were six keys in the output that looked like they might merit attention:
 \end{itemize}
 
 We first Googled these strings to see if they were known of.  The first two keys were: they represent \textbf{another} security
-flaw in Snapchat, by which you can access the phone numbers of all Snapchat users and create arbitrary numbers of 'dummy' users.\cite{2} (\#TODO)
+flaw in Snapchat, by which you can access the phone numbers of all Snapchat users and create arbitrary numbers of 'dummy' users.\cite{2}
 
 The four strings that looked like poorly done passwords, however, were not found anywhere on the Internet.  We investigated the file
 they came from to see if there was anything interesting in there: see Figure 2(\#TODO)
@@ -133,20 +133,10 @@ rather badly misled by Snapchat's claims of 'security'.
 
 \begin{thebibliography}{9}
 
-        \bibitem{Dan1}
-        Goodin, Dan. "Vast Array of Medical Devices Vulnerable to Serious Hacks, Feds Warn." \emph{ArsTechnica.} N.p., 13 June 2013. Web. 21 Mar. 2014. <http://arstechnica.com/security/2013/06/vast-array-of-medical-devices-vulnerable-to-serious-hacks-feds-warn/>
-
-        \bibitem{Dan2}
-        Goodin, Dan. "Brave New World—medical Devices Use Biometrics to Prevent Hack Attacks | Ars Technica." \emph{ArsTechnica.} N.p., 7 July 2012. Web. 21 Mar. 2014. <http://arstechnica.com/security/2012/08/medical-device-hack-attacks/>
-        
-        \bibitem{Imdguard}
-        IMDGuard: Securing implanted medical devices with the external guardian
-        (Xu et al, http://www.cs.wm.edu/~fxu/data/imd-infocom.pdf)
-        
-        \bibitem{Pacemackers}
-        Pacemakers and Implanted Cardiac Defibrillators: Software Radio Attacks and Zero-Power Defenses \emph{ICS-CERT}
-        (Halperin et al, http://www.secure-medicine.org/public/publications/icd-study.pdf)
-        http://ics-cert.us-cert.gov/alerts/ICS-ALERT-13-164-01
+        \bibitem{1}
+        http://security.stackexchange.com/questions/52584/why-can-we-still-crack-snapchat-photos-in-12-lines-of-ruby
+        \bibitem{2}
+        http://gibsonsec.org/snapchat/snapchat_gibsonsec.txt
 
 \end{thebibliography}
 \end{document}
