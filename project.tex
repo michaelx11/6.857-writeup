@@ -4,6 +4,7 @@
 \usepackage{indentfirst}
 \usepackage{algorithm2e}
 \usepackage{amsmath, amsthm, graphicx, caption}
+\usepackage{float}
 \usepackage[margin=1in]{geometry}
 \newtheorem{theorem}{Theorem}
 \numberwithin{theorem}{subsection}
@@ -56,7 +57,7 @@ Given these issues, and given our inability to find any other analysis of such a
 and coding our own analyzer.
 
 \subsection{Implementation}
-We downloaded Android APKs from various locations across the Internet, most notably (#TODO). Once downloaded, we used
+We downloaded Android APKs from various locations across the Internet, most notably (\#TODO). Once downloaded, we used
 the open-source program APKTool \cite{APKTool} to decompile these APKs.  APKTool decompiles the app into Smali code; this
 is the language used by the Android system.
 We decompiled all $917$ on a single quad-core machine. In addition to the Smali code, this process generated extraneous files
@@ -66,6 +67,7 @@ each directory for lines in Smali files containing ``const-string''. We fed thes
 which checked validity based on Shannon entropy, length, and composition (letters and numbers). Before filtering a
 decompiled application averaged $200,000$ lines of Smali code. After filtering, we obtained on average only a few dozen
 possible hits for each app.
+
 \subsection{Initial Results}
 
   We focused on searching for \texttt{const-string} objects, or hardcoded strings, in the decompiled Smali.
@@ -84,6 +86,8 @@ of our analyzed data reveals that $16$ or $17$ applications make us of the Bounc
 libraries. The insight here is that we can easily identify which files contains crypto code and check
 for hardcoded keys and other vulnerabilities in close proximity.
 
+\subsubsection{Cryptography References}
+
   Later, we shifted to searching for specific calls to symmetric block cipher methods. We looked for both
 block cipher standards and modes such as \textbf{AES}, \textbf{DES}, \textbf{CFB} and \textbf{CBC}. Regex expressions were used to filter
 for spurious hits; a string that simply contained \textbf{AES} would not be included. We verified this manually by printing out discovered
@@ -91,6 +95,14 @@ references. All the references we inspected were of the format \texttt{AES/CBC/N
 a call to a function from Java's \texttt{Cipher} class in the \texttt{Javax/Crypto} package. Developers who did not use this library for
 ciphers may not have been listed, but again our goal was broad trends over a large number of apps. By doing this analysis, we were effectively
 examining how a significant proportion of application developers were using block ciphers, and if they were using them correctly.
+
+\begin{figure}[H]
+  \caption{References of cryptographic algorithms in $917$ analyzed applications.}
+  \centering
+  \includegraphics[scale=0.8]{fig1.png}
+\end{figure}
+
+\subsubsection{Block Ciphers}
 
 The results we obtained, summarized in Figure 2., are somewhat shocking. We recorded $132$ individual applications which used
 \textbf{DES} for their encryption. \textbf{DES} is an antiquated symmetric block cipher standard which relies on $56$ bit keys,
@@ -103,6 +115,12 @@ example of this is \textbf{ECB} mode encryption applied to an image of Tux, the 
 clearly reveals the outline of Tux. Any area of uniform color is immediately obvious after \textbf{ECB} encryption.
 While not entirely comprehensive, our data shows a striking number of applications that use block ciphers in vulnerable
 configurations.
+
+\begin{figure}[H]
+  \caption{References of Block Cipher Uses in $917$ analyzed applications.}
+  \centering
+  \includegraphics[scale=0.8]{fig2.png}
+\end{figure}
 
 \subsection{Back to Snapchat?}
 
@@ -166,7 +184,7 @@ not think it is necessary to contrain the publication of this piece on that basi
         \bibitem{1}
         http://security.stackexchange.com/questions/52584/why-can-we-still-crack-snapchat-photos-in-12-lines-of-ruby
         \bibitem{2}
-        http://gibsonsec.org/snapchat/snapchat_gibsonsec.txt
+        http://gibsonsec.org/snapchat/snapchat\_gibsonsec.txt
         \bibitem{APKTool}
         https://code.google.com/p/android-apktool/
 
