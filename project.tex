@@ -55,13 +55,16 @@ applications to be analyzed, but the analyzer did not return any results for us.
 none of which are very prominent or popular. 
 
 Given these issues, and given our inability to find any other analysis of such apps, we felt justified in designing 
-and coding our own analyzer.
+and coding our own analyzer. For our project, we did not utilize Androguard and therefore could not perform as
+rigorous as an analysis. Their described approach requires knowledge of the program's structure, since it attempts to
+determine when and where specific registers are statically defined. Our approach is more localized, simply scanning
+for interesting strings: either random keys or references.
 
 \section{Bulk Analysis}
 
 % Assumes a description of the SnapChat vulnerability
-  Inspired by Snapchat's snafu, we strove to find similar errors in other popular apps. We downloaded
-$917$ popular Android applications in .apk form for analysis. We summarize our method and results below.
+  Inspired by Snapchat's snafu, we strove to find similar errors in other popular apps. We downloaded,
+decompiled and analyzed $917$ popular Android applications.
 
 \subsection{Implementation}
 
@@ -130,6 +133,14 @@ We have not uncovered exact details of how these encryption algorithms are being
 say, we cannot say for certain whether it is using ECB properly (to encrypt a single block of data) or improperly (to encrypt multiple
 blocks).  However, our data shows an impressive number of applications that use block ciphers in vulnerable configurations.  We think it
 probable that most if not all of these apps are in fact using their configurations improperly, exposing themselves to security risks.
+
+\subsubsection{Correlations}
+
+  We combined our analyers for references to cryptography, block ciphers and random strings to attempt to pinpoint vulnerabilities. In detail,
+we filtered the random strings the first analysis returned by whether or not they were in files that contained crypto algorithms. Any file
+that contained \texttt{SecretKeySpec}, the constructor for initializing secret keys in the Java API, and promising random strings
+was flagged. This narrowed our results, but manual inspection is still required to distinguish between vulnerabilities and false positives.
+In further work, we hope to use correlated searches to discover a broader class of vulnerabilities with improved accuracy.
 
 \begin{figure}[H]
   \caption{References of Block Cipher Uses in $917$ analyzed applications.}
