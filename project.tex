@@ -70,20 +70,21 @@ the open-source program APKTool \cite{APKTool} to decompile these APKs. An APK i
 We decompiled all $917$ on a single quad-core machine. In addition to the Smali code, this process generated extraneous files
 such as images, sound or fonts. 
  
-Our next step was to scan the directory and filter the source for relevant strings. We used the \texttt{egrep} to search
-each directory for lines in Smali files containing ``const-string''. We fed these lines into a Python script
+Our next step was to scan the directory and filter the source for relevant strings. We used the Linux utility \texttt{grep} 
+to search each directory for lines in Smali files containing ``const-string''. We fed these lines into a Python script
 which checked validity based on Shannon entropy, length, and composition (letters and numbers). Before filtering a
 decompiled application averaged $200,000$ lines of Smali code. After filtering, we obtained on average only a few dozen
 possible hits for each app.
 
 \subsection{Initial Results}
 
-  We focused on searching for \texttt{const-string} objects, or hardcoded strings, in the decompiled Smali.
-At first, we focused on searching for purely high-entropy constant strings of significant length. 
-After examining the initial analysis data, we noticed that a large number of cryptographic terms other than keys were being
-listed. For example, ``SHA1withRSA'' was a common term that qualified as ``high-entropy''. In light of this discovery,
-we decided to investigate references to cryptographic algorithms; while seeing that an app contains the string ``SHA1withRSA''
-does not uncover any actual security flaws, it does tell you something about what encryption system the app uses.
+  We manually looked through the lists of \texttt{const-string} objects that our filter had highlighted for our attention.
+At first, we focused on searching for purely high-entropy constant strings of significant length. However, a fortunate coincidence 
+pointed us down another line of analysis; almost all apps contained hardcoded strings that conveyed information about the type 
+of encryption used, along the lines of "SHA1withRSA".  Our filter was quite basic, and so it highlighted these strings as possible 
+keys for us.  In light of this discovery, we decided to investigate references to cryptographic algorithms; while seeing that an 
+app contains the string ``SHA1withRSA'' does not uncover any actual security flaws, it does tell you something about what encryption 
+system the app uses.
 
 \subsection{Aggregate Information}
 
