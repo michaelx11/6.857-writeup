@@ -184,7 +184,11 @@ letters ``a'' through ``d'' in the decompiled code) are initialized at the top. 
 is inserted into one of those fields.
 
 This means that those integer fields are functionally hard-coded themselves; while their values are recalculated every time, they're recalculated in a
-deterministic way from hardcoded inputs, and so will always be the same.
+deterministic way from hardcoded inputs, and so will always be the same.  They could represent another flaw in Snapchat.
+
+Unfortunately, none of us understands Smali, and there is no way to reliably decompile Smali into any other language.  This meant that we got rather badly
+stuck when trying to explore further into the file and find out what exactly was done with those integer fields.  Nevertheless, we think this is an
+interesting line of inquiry, and we hope someone pursues it in future.
 
 \subsection{Continued Investigation}
 
@@ -215,22 +219,31 @@ mistaken impression that it provides security.  Given that there are two separat
 each of them has been online for months or more, with no response from Snapchat), in addition to our own findings, we think that Snapchat's users are being
 rather badly misled by Snapchat's claims of 'security'.
 
+\subsection{Conclusion}
+
+Our initial plan was to try to find additional hard-coded encryption keys, and potentially other vunlerabilities.  While our lack of comprehension of Smali
+wound up making this extremely difficult, we found another avenue of attack; identifying use of crypto systems with known vulnerabilities.  We found that 
+several poor algorithms were used with distressing frequency, meaning that it there are likely vunlerabilities in a fair portion of apps. 
+
+We've suggested a couple lines down which further investigation could go: poking another hole in Snapchat, or analyzing other apps in bulk with some more
+sophisticated techniques.  We've also suggested how such information could be brought to the public's attention.
+
 \subsection{Responsible Disclosure: for 6.857 Staff Attention}
 
 When considering vulnerabilities in published software, it is important to be careful not to release anything that will harm software manufacturers.
 Through most of our paper, however, we deal with these flaws only in aggregate; we are not mentioning specific apps, only classes of security
-flaw that we have observed throughout many apps.  This isn't a significant security issue; these flaws are already known, all we have done is
+flaw that we have observed throughout many apps.  This isn't a significant security issue; these flaws are alread widely known, all we have done is
 data gathering to determine how frequent they are.
 
-We have gone into some detail on the security flaws of Snapchat.  However, as many such flaws are already public knowledge\cite{snapchatFlaw1}\cite{snapchatFlaw2}, we do
-not think it is necessary to contrain the publication of this piece on that basis.
+We have gone into some detail on already-known security flaws of Snapchat.  However, as these flaws are already public knowledge\cite{snapchatFlaw1}\cite{snapchatFlaw2}, 
+we do not think it is necessary to contrain the publication of this piece on that basis.
 
 However, there are several aspects of this project that make us leery about releasing this report publicly.  First, our downloading and decompiling
-of large numbers of APKs probably violates an equally large number of terms-of-service agreements.  Secondly, the four strange hashed strings in Snapchat 
-may represent an additional flaw; despite Snapchat's reprehensible behaviour when it comes to fixing its security breaches, it would probably be unwise 
-to publish this report without at least making them aware of it in advance.
+of large numbers of APKs probably violates an equally large number of terms-of-service agreements, and may qualify as software piracy.  Secondly, 
+the four strange hashed strings in Snapchat may represent an additional flaw; despite Snapchat's reprehensible behaviour when it comes to fixing 
+its security breaches, it would probably be unwise to publish this report without at least making them aware of it in advance.
 
-Overall, this report probably shouldn't be made available on the 6.857 webpage, and \textbf{definitely} shouldn't be made public until some time after
+Overall, this report probably shouldn't be made available on the 6.857 webpage at all, and \textbf{definitely} shouldn't be made public until some time after
 Snapchat has been alerted (even though history suggests they are not exactly likely to act on it.) 
 
 \begin{thebibliography}{9}
