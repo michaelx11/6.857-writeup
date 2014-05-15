@@ -1,6 +1,7 @@
 \documentclass[11pt]{article}
 
 \usepackage{verbatim}
+\usepackage{setspace}
 \usepackage{indentfirst}
 \usepackage{algorithm2e}
 \usepackage{amsmath, amsthm, graphicx, caption}
@@ -12,30 +13,23 @@
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{definition}[theorem]{Definition}
 \newcommand{\optcost}{\text{Optcost}}
-\title{Keys Under the Welcome Mat}
+\doublespacing
+\title{Keys Under the Welcome Mat \\ 6.857 Final Project Report}
 \author{Michelle Wang, Matthew Furtney, Andrew Hyer, Michael Xu}
 
 \begin{document}
 \maketitle
 
-\section{Snapchat Flaws}
+\section{Introduction}
 
-The inspiration for this project was a description of a security flaw in Snapchat, published on the internet.\cite{1}
+The inspiration for this project was a description of a security flaw in Snapchat, published on the internet.\cite{1} The idea behind the Snapchat application is that pictures sent to and from users will disappear within ten seconds of being opened. However, rather than being erased from the device, images are actually stored permanently in device memory unless manually deleted. Snapchat only prevents casual users from seeing these stored images through limitations of its user interface. Users should also be restricted from viewing these images directly becasue they are encrypted. Unfortunately, it encrypts them using the encryption key "M02cnQ51Ji97vwT4," which has been hard-coded into the application code. Once this key is found and known, you can use it to decrypt these images, accessing images you're not meant to be able to see. We were easily able to find this key ourselves in the source code and the idea for our project was born.
 
-Snapchat encrypts images that the owner of the device it's running on is not supposed to be able to access.  Unfortunately,
-it encrypts them using the hard-coded encryption key ``M02cnQ51Ji97vwT4''.  Once this key is found and known, you can use it
-to decrypt these images, accessing images you're not meant to be able to see.
+With the rapid iteration and agile development style of current software development, new versions of apps get rolled out week to week. With such a fast paced environment, it makes sense that some security may be overlooked and things like hard-coded encryption keys may happen. The purpose of this project was to perform a broad security survey of Android applications as well as a more in-depth look at security vulnerabilities in Snapchat. We would begin by looking for similarly hard-coded encryption strings but expand to look for other security flaws such as the use of depricated algorithms.
 
-\section{Bulk Analysis}
+\section{Previous Work}
 
-% Assumes a description of the SnapChat vulnerability
-  Inspired by Snapchat's snafu, we strove to find similar errors in other popular apps. We downloaded
-$917$ popular Android applications in .apk form for analysis. We summarize our method and results below.
-
-\subsection{Previous Work}
-
-  As one may expect, we were not the first to analyze android apks for security vulnerabilities.
-Cryptolint was a system designed by researchers at CMU and UCSB to analyze android apps for security vulnerabilities. 
+As one may expect, we were not the first to analyze android apks for security vulnerabilities.
+Cryptolint was a system designed by researchers at Carnegie Mellon University and the University of California at Santa Barbara to analyze android apps for security vulnerabilities. 
 Cryptolint uses software called Androguard for sophisticated static analysis of the decompiled Android apks.
 It checks for six specific types of vulnerabilities: 
 
@@ -48,21 +42,27 @@ It checks for six specific types of vulnerabilities:
   \item Constant seeds for SecureRandom()
 \end{enumerate}
 
-Unfortunately, we could not locate any source for Cryptolint. Cryptolint's site allows for submission of
-applications to be analyzed, but the analyzer did not return any results for us.  The source code of their
-system is not available, so we cannot use it for ourselves.   Moreover, the site only supplies $5$ analyzed apps, 
-none of them very prominent or popular. 
+Unfortunately, we could not locate any source code for Cryptolint. Cryptolint's site allows for submission of
+applications to be analyzed, but the analyzer did not return any results for us.  Since the source code was unavailable, we could not use or verify any results for ourselves. Moreover, the site only supplies analysis for $5$ apps, 
+none of which are very prominent or popular. 
 
-Given these issues, and given our inability to find any other analysis of such apps, we feel justified in designing 
+Given these issues, and given our inability to find any other analysis of such apps, we felt justified in designing 
 and coding our own analyzer.
 
+\section{Bulk Analysis}
+
+% Assumes a description of the SnapChat vulnerability
+  Inspired by Snapchat's snafu, we strove to find similar errors in other popular apps. We downloaded
+$917$ popular Android applications in .apk form for analysis. We summarize our method and results below.
+
 \subsection{Implementation}
-We downloaded Android APKs from various locations across the Internet, most notably (\#TODO). Once downloaded, we used
-the open-source program APKTool \cite{APKTool} to decompile these APKs.  APKTool decompiles the app into Smali code; this
-is the language used by the Android system.
+
+We downloaded Android APKs from various locations across the Internet, most notably Android Drawer \cite{AndroidDrawer}. Once downloaded, we used
+the open-source program APKTool \cite{APKTool} to decompile these APKs. An APK is a zipped compilation of all the executable .dex files that the Android JVM compiles from Java. APKTool decompiles the app into Smali code, which is the language that assembles and disassembles dex files from Java.
 We decompiled all $917$ on a single quad-core machine. In addition to the Smali code, this process generated extraneous files
 such as images, sound or fonts. 
-  Our next step was to scan the directory and filter the source for relevant strings. We used the \texttt{egrep} to search
+ 
+Our next step was to scan the directory and filter the source for relevant strings. We used the \texttt{egrep} to search
 each directory for lines in Smali files containing ``const-string''. We fed these lines into a Python script
 which checked validity based on Shannon entropy, length, and composition (letters and numbers). Before filtering a
 decompiled application averaged $200,000$ lines of Smali code. After filtering, we obtained on average only a few dozen
