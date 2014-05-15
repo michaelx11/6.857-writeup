@@ -22,7 +22,7 @@
 
 \section{Introduction}
 
-The inspiration for this project was a description of a security flaw in Snapchat, published on the internet.\cite{1} The idea behind the Snapchat application is that pictures sent to and from users will disappear within ten seconds of being opened. However, rather than being erased from the device, images are actually stored permanently in device memory unless manually deleted. Snapchat only prevents casual users from seeing these stored images through limitations of its user interface. Users should also be restricted from viewing these images directly becasue they are encrypted. Unfortunately, it encrypts them using the encryption key "M02cnQ51Ji97vwT4," which has been hard-coded into the application code. Once this key is found and known, you can use it to decrypt these images, accessing images you're not meant to be able to see. We were easily able to find this key ourselves in the source code and the idea for our project was born.
+The inspiration for this project was a description of a security flaw in Snapchat, published on the internet.\cite{snapchatFlaw1} The idea behind the Snapchat application is that pictures sent to and from users will disappear within ten seconds of being opened. However, rather than being erased from the device, images are actually stored permanently in device memory unless manually deleted. Snapchat only prevents casual users from seeing these stored images through limitations of its user interface. Users should also be restricted from viewing these images directly becasue they are encrypted. Unfortunately, it encrypts them using the encryption key "M02cnQ51Ji97vwT4," which has been hard-coded into the application code. Once this key is found and known, you can use it to decrypt these images, accessing images you're not meant to be able to see. We were easily able to find this key ourselves in the source code and the idea for our project was born.
 
 With the rapid iteration and agile development style of current software development, new versions of apps get rolled out week to week. With such a fast paced environment, it makes sense that some security may be overlooked and things like hard-coded encryption keys may happen. The purpose of this project was to perform a broad security survey of Android applications as well as a more in-depth look at security vulnerabilities in Snapchat. We would begin by looking for similarly hard-coded encryption strings but expand to look for other security flaws such as the use of depricated algorithms.
 
@@ -147,7 +147,7 @@ There were six keys in the output that looked like they might merit attention:
 \end{itemize}
 
 We first Googled these strings to see if they were known of.  The first two keys were: they represent \textbf{another} security
-flaw in Snapchat, by which you can access the phone numbers of all Snapchat users and create arbitrary numbers of 'dummy' users.\cite{2}
+flaw in Snapchat, by which you can access the phone numbers of all Snapchat users and create arbitrary numbers of 'dummy' users.\cite{snapchatFlaw2}
 
 The four strings that looked like poorly done passwords, however, were not found anywhere on the Internet.  We investigated the file
 they came from to see if there was anything interesting in there: see Figure 2(\#TODO)
@@ -200,9 +200,9 @@ not think it is necessary to contrain the publication of this piece on that basi
 
 \begin{thebibliography}{9}
 
-        \bibitem{1}
+        \bibitem{snapchatFlaw1}
         http://security.stackexchange.com/questions/52584/why-can-we-still-crack-snapchat-photos-in-12-lines-of-ruby
-        \bibitem{2}
+        \bibitem{snapchatFlaw2}
         http://gibsonsec.org/snapchat/snapchat\_gibsonsec.txt
         \bibitem{APKTool}
         https://code.google.com/p/android-apktool/
