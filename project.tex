@@ -139,7 +139,7 @@ probable that most if not all of these apps are in fact using their configuratio
 
 \subsection{Back to Snapchat?}
 
-When we ran our basic Python analyzer on Snapchat, we got some interesting results: see Figure 1 (\#TODO).
+When we ran our basic Python analyzer on Snapchat, we got some interesting results: see Figure 3 (\#TODO).
 
 The key ``M02cnQ51Ji97vwT4'' is, as we would hope, visible here.  However, there are several other sets of
 hardcoded strings that look like they could also be keys!  We looked into these, and found some interesting stuff.
@@ -165,7 +165,7 @@ We first Googled these strings to see if they were known of.  The first two keys
 flaw in Snapchat, by which you can access the phone numbers of all Snapchat users and create arbitrary numbers of 'dummy' users.\cite{snapchatFlaw2}
 
 The four strings that looked like poorly done passwords, however, were not found anywhere on the Internet.  We investigated the file
-they came from to see if there was anything interesting in there: see Figure 2(\#TODO)
+they came from to see if there was anything interesting in there: see Figure 4(\#TODO)
 
 The code here is in Smali, which is difficult to read, but what's going on on this page is simple enough.  Four integer fields (designated by
 letters ``a'' through ``d'' in the decompiled code) are initialized at the top.  Each of the four strings we found is hashed into an int, which 
