@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2014.1.27)  14 MAY 2014 21:41
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2014.1.27)  14 MAY 2014 21:47
 entering extended mode
  %&-line parsing enabled.
 **project.tex
@@ -333,12 +333,12 @@ LaTeX Warning: Citation `1' on page 11 undefined on input line 225.
 LaTeX Warning: Citation `2' on page 11 undefined on input line 225.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 231--232
+Underfull \hbox (badness 10000) in paragraph at lines 239--240
 []\OT1/cmr/m/n/10.95 http://security.stackexchange.com/questions/52584/why-can-
 we-still-crack-snapchat-photos-
  []
 
-[11] (./project.aux)
+[11] [12] (./project.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -358,9 +358,9 @@ xlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts
 c/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
 m/cmr17.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 ></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on project.pdf (11 pages, 439419 bytes).
+Output written on project.pdf (12 pages, 440472 bytes).
 PDF statistics:
- 77 PDF objects out of 1000 (max. 8388607)
+ 80 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
