@@ -37,7 +37,7 @@ With the rapid iteration and agile development style of current software develop
 \section{Previous Work}
 
 As one may expect, we were not the first to analyze android apks for security vulnerabilities.
-Cryptolint was a system designed by researchers at Carnegie Mellon University and the University of California at Santa Barbara to analyze android apps for security vulnerabilities. 
+Cryptolint \cite{Cryptolint} was a system designed by researchers at Carnegie Mellon University and the University of California at Santa Barbara to analyze android apps for security vulnerabilities. 
 Cryptolint uses software called Androguard for sophisticated static analysis of the decompiled Android apks.
 It checks for six specific types of vulnerabilities: 
 
@@ -246,7 +246,7 @@ its security breaches, it would probably be unwise to publish this report withou
 Overall, this report probably shouldn't be made available on the 6.857 webpage at all, and \textbf{definitely} shouldn't be made public until some time after
 Snapchat has been alerted (even though history suggests they are not exactly likely to act on it.) 
 
-\begin{thebibliography}{9}
+\begin{thebibliography}{5}
 
         \bibitem{snapchatFlaw1}
         http://security.stackexchange.com/questions/52584/why-can-we-still-crack-snapchat-photos-in-12-lines-of-ruby
@@ -256,6 +256,11 @@ Snapchat has been alerted (even though history suggests they are not exactly lik
         https://code.google.com/p/android-apktool/
         \bibitem{AndroidDrawer}
         http://www.androiddrawer.com/
+        \bibitem{Cryptolint}
+        Manuel Egele, David Brumley, Yanick Fratantonio, Christopher Kruegel.
+        An empirical study of cryptographic misuse in android applications
+        \emph{CSS '13}
+        2013
 
 \end{thebibliography}
 \end{document}
