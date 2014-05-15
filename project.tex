@@ -115,15 +115,21 @@ examining how a significant proportion of application developers were using bloc
 
 The results we obtained, summarized in Figure 2., are somewhat shocking. We recorded $132$ individual applications which used
 \textbf{DES} for their encryption. \textbf{DES} is an antiquated symmetric block cipher standard which relies on $56$ bit keys,
-easily brute forceable with modern hardware. While developers may have reasons for using \textbf{DES}, we want to encourage
-the community to switch to \textbf{AES} for all symmetric block cipher applications. The benefits of secure cryptography far
-outweight convenience or other justifications. We also draw attention to the number of applications that utilize ciphers in
-\textbf{ECB} mode. For anything more than a single block, \textbf{ECB} mode is insecure, since each block will always decrypt
-in the same way. This essentially leaves the pattern of the plaintext intact, leaking significant information. The canonical
-example of this is \textbf{ECB} mode encryption applied to an image of Tux, the Linux penguin. The encrypted data
-clearly reveals the outline of Tux. Any area of uniform color is immediately obvious after \textbf{ECB} encryption.
-While not entirely comprehensive, our data shows a striking number of applications that use block ciphers in vulnerable
-configurations.
+easily brute forceable with modern hardware. While developers may have moives for using \textbf{DES}, in any application that cares
+at all about security \textbf{AES} is a far better choice for symmetric block cipher applications. If privacy is at all desired, 
+the benefits of secure cryptography far outweight convenience or other justifications. 
+
+We also draw attention to the number of applications that utilize ciphers in \textbf{ECB} mode. For anything more than a single block, 
+\textbf{ECB} mode is insecure, since each block will always decrypt in the same way. This essentially leaves the pattern of the 
+plaintext intact, leaking significant information. 
+
+(The canonical example of this is \textbf{ECB} mode encryption applied to an image of Tux, the Linux penguin; The encrypted data
+clearly reveals the outline of Tux. Any area of uniform color is immediately obvious after \textbf{ECB} encryption.)
+
+We have not uncovered exact details of how these encryption algorithms are being used; when we find an app using ECB mode encryption,
+say, we cannot say for certain whether it is using ECB properly (to encrypt a single block of data) or improperly (to encrypt multiple
+blocks).  However, our data shows an impressive number of applications that use block ciphers in vulnerable configurations.  We think it
+probable that most if not all of these apps are in fact using their configurations improperly, exposing themselves to security risks.
 
 \begin{figure}[H]
   \caption{References of Block Cipher Uses in $917$ analyzed applications.}
